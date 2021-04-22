@@ -51,7 +51,22 @@ defmodule Absinthe.Phase.Document.Result do
     value =
       case Type.unwrap(emitter.schema_node.type) do
         %Type.Scalar{} = schema_node ->
-          Type.Scalar.serialize(schema_node, value)
+          try do
+            Type.Scalar.serialize(schema_node, value)
+          rescue
+            _e in [Absinthe.SerializationError, Protocol.UndefinedError] ->
+              raise(
+                Absinthe.SerializationError,
+                """
+                Could not serialize term #{inspect(value)} as type #{schema_node.name}
+
+                When serializing the field:
+                #{emitter.parent_type.name}.#{emitter.schema_node.name} (#{
+                  emitter.schema_node.__reference__.location.file
+                }:#{emitter.schema_node.__reference__.location.line})
+                """
+              )
+          end
 
         %Type.Enum{} = schema_node ->
           Type.Enum.serialize(schema_node, value)

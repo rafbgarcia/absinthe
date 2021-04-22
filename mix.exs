@@ -1,18 +1,22 @@
 defmodule Absinthe.Mixfile do
   use Mix.Project
 
-  @version "1.5.1"
+  @source_url "https://github.com/absinthe-graphql/absinthe"
+  @version "1.6.4"
 
   def project do
     [
       app: :absinthe,
       version: @version,
-      elixir: "~> 1.8",
+      elixir: "~> 1.10",
       elixirc_paths: elixirc_paths(Mix.env()),
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       package: package(),
-      source_url: "https://github.com/absinthe-graphql/absinthe",
+      source_url: @source_url,
+      preferred_cli_env: [
+        dialyzer: :test
+      ],
       docs: [
         source_ref: "v#{@version}",
         main: "overview",
@@ -26,8 +30,8 @@ defmodule Absinthe.Mixfile do
       ],
       deps: deps(),
       dialyzer: [
-        plt_add_apps: [:mix, :dataloader, :decimal, :ex_unit, :inets],
-        plt_file: {:no_warn, "priv/plts/absinthe.plt"}
+        plt_core_path: "priv/plts",
+        plt_add_apps: [:mix, :dataloader, :decimal, :ex_unit]
       ]
     ]
   end
@@ -52,8 +56,8 @@ defmodule Absinthe.Mixfile do
       licenses: ["MIT"],
       links: %{
         Website: "https://absinthe-graphql.org",
-        Changelog: "https://github.com/absinthe-graphql/absinthe/blob/master/CHANGELOG.md",
-        GitHub: "https://github.com/absinthe-graphql/absinthe"
+        Changelog: "#{@source_url}/blob/master/CHANGELOG.md",
+        GitHub: @source_url
       }
     ]
   end
@@ -62,20 +66,20 @@ defmodule Absinthe.Mixfile do
   defp elixirc_paths(_), do: ["lib"]
 
   def application do
-    [extra_applications: [:logger]]
+    [extra_applications: [:crypto, :logger]]
   end
 
   defp deps do
     [
-      {:nimble_parsec, "~> 0.5"},
+      {:nimble_parsec, "~> 0.5 or ~> 1.0"},
       {:telemetry, "~> 0.4.0"},
       {:dataloader, "~> 1.0.0", optional: true},
-      {:decimal, "~> 1.0", optional: true},
-      {:ex_doc, "~> 0.21.0", only: :dev},
+      {:decimal, "~> 1.0 or ~> 2.0", optional: true},
+      {:ex_doc, "~> 0.22", only: :dev},
       {:benchee, ">= 1.0.0", only: :dev},
       {:dialyxir, "~> 1.0.0", only: [:dev, :test], runtime: false},
       {:phoenix_pubsub, ">= 0.0.0", only: :test},
-      {:mix_test_watch, "~> 0.4.1", only: [:test]}
+      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
     ]
   end
 
@@ -178,8 +182,7 @@ defmodule Absinthe.Mixfile do
         Absinthe.Pipeline,
         Absinthe.Phase,
         Absinthe.Phase.Document.Context,
-        Absinthe.Phase.Telemetry,
-        Absinthe.Pipeline.ErrorResult
+        Absinthe.Phase.Telemetry
       ],
       "Document Adapters": [
         Absinthe.Adapter,

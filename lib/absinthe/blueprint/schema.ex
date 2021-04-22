@@ -145,7 +145,7 @@ defmodule Absinthe.Blueprint.Schema do
   end
 
   defp build_types([{:values, values} | rest], [enum | stack], buff) do
-    enum = Map.update!(enum, :values, &(values ++ &1))
+    enum = Map.update!(enum, :values, &(List.wrap(values) ++ &1))
     build_types(rest, [enum | stack], buff)
   end
 
@@ -169,7 +169,6 @@ defmodule Absinthe.Blueprint.Schema do
   end
 
   defp build_types([:close | rest], [%Schema.InputValueDefinition{} = arg, field | stack], buff) do
-    arg = Map.update!(arg, :default_value, fn val -> {:unquote, [], [val]} end)
     build_types(rest, [push(field, :arguments, arg) | stack], buff)
   end
 
@@ -177,6 +176,7 @@ defmodule Absinthe.Blueprint.Schema do
     field =
       field
       |> Map.update!(:middleware, &Enum.reverse/1)
+      |> Map.update!(:arguments, &Enum.reverse/1)
       |> Map.update!(:triggers, &{:%{}, [], &1})
       |> Map.put(:function_ref, {obj.identifier, field.identifier})
 
@@ -214,13 +214,13 @@ defmodule Absinthe.Blueprint.Schema do
     build_types(rest, [push(schema, :directive_definitions, dir) | stack], buff)
   end
 
-  @simple_close [
-    Schema.ScalarTypeDefinition,
-    Schema.EnumTypeDefinition
-  ]
+  defp build_types([:close | rest], [%Schema.EnumTypeDefinition{} = type, schema | stack], buff) do
+    type = Map.update!(type, :values, &Enum.reverse/1)
+    schema = push(schema, :type_definitions, type)
+    build_types(rest, [schema | stack], buff)
+  end
 
-  defp build_types([:close | rest], [%module{} = type, schema | stack], buff)
-       when module in @simple_close do
+  defp build_types([:close | rest], [%Schema.ScalarTypeDefinition{} = type, schema | stack], buff) do
     schema = push(schema, :type_definitions, type)
     build_types(rest, [schema | stack], buff)
   end

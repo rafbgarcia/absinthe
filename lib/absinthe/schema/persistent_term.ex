@@ -21,6 +21,7 @@ if Code.ensure_loaded?(:persistent_term) do
 
     In your schema module:
     ```
+    use Absinthe.Schema
     @schema_provider Absinthe.Schema.PersistentTerm
     ```
 
@@ -83,12 +84,6 @@ if Code.ensure_loaded?(:persistent_term) do
       schema_mod
       |> get()
       |> Map.fetch!(:__absinthe_interface_implementors__)
-    end
-
-    def __absinthe_prototype_schema__(schema_mod) do
-      schema_mod
-      |> get()
-      |> Map.fetch!(:__absinthe_prototype_schema__)
     end
 
     @dialyzer {:nowarn_function, [get: 1]}

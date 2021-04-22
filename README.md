@@ -1,12 +1,17 @@
 # Absinthe
 
-[GraphQL](https://facebook.github.io/graphql/) implementation for Elixir.
+[![Build Status](https://github.com/absinthe-graphql/absinthe/workflows/CI/badge.svg)](https://github.com/absinthe-graphql/absinthe/actions?query=workflow%3ACI)
+[![Version](https://img.shields.io/hexpm/v/absinthe.svg)](https://hex.pm/packages/absinthe)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/absinthe/)
+[![Download](https://img.shields.io/hexpm/dt/absinthe.svg)](https://hex.pm/packages/absinthe)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Last Updated](https://img.shields.io/github/last-commit/absinthe-graphql/absinthe.svg)](https://github.com/absinthe-graphql/absinthe/commits/master)
 
-[![Hex pm](http://img.shields.io/hexpm/v/absinthe.svg?style=flat)](https://hex.pm/packages/absinthe)[![Build Status](https://travis-ci.org/absinthe-graphql/absinthe.svg?branch=master)](https://travis-ci.org/absinthe-graphql/absinthe)[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[GraphQL](https://facebook.github.io/graphql/) implementation for Elixir.
 
 Goals:
 
-- Complete implementation of the [GraphQL Working Draft](https://facebook.github.io/graphql).
+- Complete implementation of the [GraphQL Working Draft](https://spec.graphql.org/draft/).
 - An idiomatic, readable, and comfortable API for Elixir developers
 - Extensibility based on small parts that do one thing well.
 - Detailed error messages and documentation.
@@ -61,16 +66,6 @@ and [Relay](https://facebook.github.io/relay/) on the frontend.
 Of course we work out of the box with other frontend frameworks and GraphQL
 clients, too.
 
-### An Active Community
-
-The project is under constant improvement by a growing list of
-contributors, and your feedback is important. Please join us in Slack
-(`#absinthe-graphql` under the Elixir Slack account) or the Elixir Forum
-(tagged `absinthe`).
-
-Please remember that all interactions in our official spaces follow
-our [Code of Conduct](./CODE_OF_CONDUCT.md).
-
 ## Installation
 
 Install from [Hex.pm](https://hex.pm/packages/absinthe):
@@ -81,7 +76,7 @@ def deps do
 end
 ```
 
-Note: Absinthe requires Elixir 1.4 or higher.
+Note: Absinthe requires Elixir 1.10 or higher.
 
 ## Upgrading
 
@@ -89,7 +84,9 @@ See [CHANGELOG](./CHANGELOG.md) for upgrade steps between versions.
 
 ## Documentation
 
-See [HexDocs](https://hexdocs.pm/absinthe) and <http://absinthe-graphql.org>.
+- [Absinthe hexdocs](https://hexdocs.pm/absinthe).
+- For the tutorial, guides, and general information about Absinthe-related
+  projects, see [http://absinthe-graphql.org](http://absinthe-graphql.org).
 
 ### Mix Tasks
 
@@ -97,13 +94,23 @@ Absinthe includes a number of useful Mix tasks for extracting schema metadata.
 
 Run `mix help` in your project and look for tasks starting with `absinthe`.
 
-### Roadmap
-
-See the [Roadmap project board](https://github.com/absinthe-graphql/absinthe/projects/2) for longer term plans. 
-
 ## Related Projects
 
 See the [GitHub organization](https://github.com/absinthe-graphql).
+
+## Community
+
+The project is under constant improvement by a growing list of
+contributors, and your feedback is important. Please join us in Slack
+(`#absinthe-graphql` under the Elixir Slack account) or the Elixir Forum
+(tagged `absinthe`).
+
+Please remember that all interactions in our official spaces follow
+our [Code of Conduct](./CODE_OF_CONDUCT.md).
+
+## Contribution
+
+Please follow [contribution guide](./CONTRIBUTING.md).
 
 ## License
 
